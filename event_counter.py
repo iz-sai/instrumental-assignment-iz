@@ -12,7 +12,7 @@ except NameError:
 
 
 class EventCounter(object):
-    """
+    """TBW
     We employ double-ended queue here which has O(1) performance for append(). Trade-off is slower .read() which in the worst case is O(n**2), but that's still okay.
 
     Usage:
@@ -34,7 +34,7 @@ class EventCounter(object):
 
 
     def _buffer_append_time(self):
-        """
+        """TBW
         """
         current_time = time.time()
         diff = current_time - self._timer
