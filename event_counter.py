@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import time
 from collections import deque
 
@@ -12,19 +13,23 @@ except NameError:
 
 
 class EventCounter(object):
-    """TBW
-    We employ double-ended queue here which has O(1) performance for append(). Trade-off is slower .read() which in the worst case is O(n**2), but that's still okay.
+    """Simple event counter with 1-second granularity.
 
-    Usage:
-
-    > from event_counter import EventCounter
-    > t = EventCounter()
-    > [t.save() for _ in range(5)] # nasty, but one-liner
-    > t.read()
+    Use it to keep track of number of events happened within 1-second long bins, and count events that happened over a user-specified amount of time until current time.
 
     Parameters
     ----------
-    TBW
+    buffer_size : int, optional
+        Total time range of counter in seconds.
+
+    Examples
+    --------
+    >>> from event_counter import EventCounter
+    >>> t = EventCounter()
+    >>> for _ in range(5):
+    ...     t.save()
+    >>> t.read()
+    5
     """
 
     def __init__(self, buffer_size=BUFFER_SIZE):
@@ -33,41 +38,45 @@ class EventCounter(object):
         self._timer = time.time()
 
 
-    def _buffer_append_time(self):
-        """TBW
+    def _buffer_append(self):
+        """Append to the circular buffer new bin(s) with counter(s) set to zero, and set last (active) bin edge timestamp.
         """
         current_time = time.time()
         diff = current_time - self._timer
         if diff > 1:
-            self._buffer.extend([0] * min(int(diff), self._buffer_size))
-            self._timer = current_time
+            n_bins = min(int(diff), self._buffer_size)
+            self._buffer.extend([0] * n_bins)
+            self._timer += n_bins
 
 
     def save(self):
-        """Save event to counter
-
-        Parameters
-        ----------
-        TBW
-        """
-        self._buffer_append_time()
+        """Save event to counter."""
+        self._buffer_append()
         self._buffer[-1] += 1
 
 
     def read(self, n_seconds=None):
-        """Read counter
+        """Read event counter.
+
+        Return number of events recorded in the counter during specified time interval.
 
         Parameters
         ----------
-        TBW        
-        """
-        n_seconds = min(n_seconds, self._buffer_size) if type(n_seconds) is int else self._buffer_size
+        n_seconds : int, optional
+            Time interval in seconds until current time, i.e. count events occured within ???(now - n_seconds, now)???. 
+            By default time interval equals to the full time range of the counter.
 
-        self._buffer_append_time()
+        Returns
+        -------
+        int
+            Number of recorded events.
+        """
+        n_seconds = min(n_seconds, self._buffer_size) if type(n_seconds) is int and n_seconds > 0 else self._buffer_size
+
+        self._buffer_append()
 
         total = 0
         for i in xrange(self._buffer_size - n_seconds, self._buffer_size):
             total += self._buffer[i]
 
         return total
-
