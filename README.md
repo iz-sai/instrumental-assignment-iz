@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/iz-sai/instrumental-assignment-iz.svg?branch=master)](https://travis-ci.org/iz-sai/instrumental-assignment-iz)
+
 # EventCounter
 
 Simple event counter with 1-second granularity.
