@@ -56,6 +56,7 @@ class TestAll(unittest.TestCase):
         self.assertEqual(list(t._buffer), [1, 3, 0, 1, 1])
 
 
+    @unittest.skipIf("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", "Skipping this test on Travis CI.")
     def test_speed_write(self):
         """Testing saving events at a rate greater than 1M/s"""
         buffer_size = 3
@@ -70,6 +71,7 @@ class TestAll(unittest.TestCase):
         self.assertEqual(t.read(), n_events)
 
 
+    @unittest.skipIf("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", "Skipping this test on Travis CI.")
     def test_speed_read(self):
         """Testing reading events at a rate greater than 10k/s"""
         max_rate = int(1e4) # reads/s
