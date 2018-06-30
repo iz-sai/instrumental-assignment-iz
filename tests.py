@@ -14,6 +14,11 @@ except NameError:
 
 class TestAll(unittest.TestCase):
 
+    def is_travis(self):
+        """Test if we are running in Travis"""
+        return "TRAVIS" in os.environ and os.environ["TRAVIS"] == "true"
+
+
     def test_buffer_contents_simple(self):
         n_events = 100
 
@@ -57,12 +62,11 @@ class TestAll(unittest.TestCase):
         self.assertEqual(list(t._buffer), [1, 3, 0, 1, 1])
 
 
-    @unittest.skipIf("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", "Skipping this test on Travis CI.")
     def test_speed_write(self):
-        """Testing saving events at a rate greater than 1M/s"""
+        """Testing saving events at a rate greater than some threshold"""
         buffer_size = 3
-        max_rate = 1e6 # events/s
-        n_events = int(buffer_size * max_rate)
+        max_rate = int(1e6) if not self.is_travis() else int(1e5) # events/s
+        n_events = buffer_size * max_rate
 
         t = EventCounter(buffer_size) # each buffer element has to take at least `max_rate` events
 
@@ -72,10 +76,9 @@ class TestAll(unittest.TestCase):
         self.assertEqual(t.read(), n_events)
 
 
-    @unittest.skipIf("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", "Skipping this test on Travis CI.")
     def test_speed_read(self):
-        """Testing reading events at a rate greater than 10k/s"""
-        max_rate = int(1e4) # reads/s
+        """Testing reading events at a rate greater than some threshold"""
+        max_rate = int(1e4) if not self.is_travis() else int(1e3) # reads/s
 
         t = EventCounter()
     
