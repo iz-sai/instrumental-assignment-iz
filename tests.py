@@ -1,5 +1,6 @@
 import unittest
 import time
+import os
 
 from event_counter import EventCounter
 
