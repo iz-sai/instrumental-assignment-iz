@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/iz-sai/instrumental-assignment-iz.svg?branch=master)](https://travis-ci.org/iz-sai/instrumental-assignment-iz)
+[![codecov](https://codecov.io/gh/iz-sai/instrumental-assignment-iz/branch/master/graph/badge.svg)](https://codecov.io/gh/iz-sai/instrumental-assignment-iz)
 
 # EventCounter
 
