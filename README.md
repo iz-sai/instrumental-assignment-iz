@@ -3,7 +3,9 @@
 
 # EventCounter
 
-Simple event counter with 1 second granularity.
+Simple event counter with 1 second granularity. It provides ability to keep track of number of 
+events happened within 1 second long bins, and retrieve number of events that happened over a 
+user-specified amount of time until current time.
 
 ## Installation
 

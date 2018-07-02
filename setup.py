@@ -88,7 +88,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    #download_url=URL+"tarball/v"+__version__,
+    download_url='{0}/tarball/v{1}'.format(URL, __version__),
     test_suite="tests",
     packages=find_packages(exclude=('tests',)),
     # If your package is a single module, use this instead of 'packages':
