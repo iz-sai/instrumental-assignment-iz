@@ -3,16 +3,10 @@ import time
 import os
 
 from event_counter import EventCounter
+from event_counter.compat import xrange
 
 
-# Python 2/3 tmp hack
-try:
-    xrange
-except NameError:
-    xrange = range
-
-
-class TestAll(unittest.TestCase):
+class EventCounterTest(unittest.TestCase):
 
     def is_travis(self):
         """Test if we are running in Travis"""
@@ -85,7 +79,9 @@ class TestAll(unittest.TestCase):
         for _ in xrange(max_rate):
             t.save()
             t.read()
-        self.assertEqual(t.read(1), max_rate) # after `max_rate` reads and writes we should still be within last active bin containing `max_rate` events
+        # after `max_rate` reads and writes we should still be within last active bin 
+        # containing `max_rate` events
+        self.assertEqual(t.read(1), max_rate)
 
 
     def test_counter_empty(self):

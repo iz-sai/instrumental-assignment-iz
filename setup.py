@@ -13,12 +13,12 @@ from setuptools import find_packages, setup, Command
 
 # Package meta-data.
 NAME = 'event_counter'
-DESCRIPTION = 'Simple event counter with 1-second granularity.'
+DESCRIPTION = 'Simple event counter with 1 second granularity.'
 URL = 'https://github.com/iz-sai/instrumental-assignment-iz'
 EMAIL = 'ivan.zolotukhin@gmail.com'
 AUTHOR = 'Ivan Zolotukhin'
 REQUIRES_PYTHON = '>=2.7.0'
-VERSION = '0.1'
+VERSION = None
 
 # What packages are required for this module to be executed?
 REQUIRED = []
@@ -90,9 +90,9 @@ setup(
     url=URL,
     #download_url=URL+"tarball/v"+__version__,
     test_suite="tests",
-    #packages=find_packages(exclude=('tests',)),
+    packages=find_packages(exclude=('tests',)),
     # If your package is a single module, use this instead of 'packages':
-    py_modules=[NAME],
+    #py_modules=[NAME],
 
     install_requires=REQUIRED,
     include_package_data=True,
