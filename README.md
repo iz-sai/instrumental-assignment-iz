@@ -3,9 +3,16 @@
 
 # EventCounter
 
-Simple event counter with 1-second granularity.
+Simple event counter with 1 second granularity.
 
-### Example
+## Installation
+
+To get the latest development version, use:
+
+    pip install git+https://github.com/iz-sai/instrumental-assignment-iz.git -b develop
+
+
+## Usage
 
 In a shell with Python 2 or 3:
 
